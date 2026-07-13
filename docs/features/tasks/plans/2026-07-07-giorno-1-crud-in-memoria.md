@@ -1,7 +1,7 @@
 # Plan — Giorno 1: modulo tasks con CRUD in memoria
 
 **Data:** 2026-07-07
-**Status:** in corso
+**Status:** completed (2026-07-08) — vedi [tasks.md](../tasks.md)
 **Riferimento:** Giorno 1 del [piano di studio](../../../cross-cutting/2026-07-07-piano-studio-nestjs.md)
 
 ## Obiettivo

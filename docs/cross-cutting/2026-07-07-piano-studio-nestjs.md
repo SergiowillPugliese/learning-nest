@@ -99,8 +99,8 @@ Un task manager con utenti e autenticazione copre TUTTI i temi scelti (fondament
 
 ## Stato avanzamento
 
-- [ ] Giorno 1 — Fondamentali + CRUD in memoria
-- [ ] Giorno 2 — DTO, validazione, errori
+- [x] Giorno 1 — Fondamentali + CRUD in memoria ✅ (completato 2026-07-08; manca solo l'esperimento "campi extra nel body", fatto da ponte verso il Giorno 2)
+- [x] Giorno 2 — DTO, validazione, errori ✅ (completato 2026-07-13)
 - [ ] Giorno 3 — Prisma + SQLite
 - [ ] Giorno 4 — Auth JWT + guard
 - [ ] Giorno 5 — Request lifecycle + testing

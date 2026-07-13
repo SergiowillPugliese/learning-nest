@@ -21,7 +21,7 @@
 
 | Feature | Giorni | Stato | Plan |
 |---------|--------|-------|------|
-| `tasks` — CRUD task (prima in memoria, poi Prisma) | 1–3 | 🔄 Giorno 1 in corso | [2026-07-07 CRUD in memoria](features/tasks/plans/2026-07-07-giorno-1-crud-in-memoria.md) |
+| [`tasks`](features/tasks/tasks.md) — CRUD task (prima in memoria, poi Prisma) | 1–3 | 🔄 Giorno 3 in corso (Prisma) | [2026-07-07 CRUD in memoria](features/tasks/plans/2026-07-07-giorno-1-crud-in-memoria.md) ✅ · [2026-07-13 validazione DTO](features/tasks/plans/2026-07-13-giorno-2-validazione-dto.md) ✅ · [2026-07-13 Prisma](features/tasks/plans/2026-07-13-giorno-3-prisma.md) 🔄 |
 | `users` — anagrafica utenti | 4 | ⬜ da iniziare | — |
 | `auth` — register/login JWT, guard | 4 | ⬜ da iniziare | — |
 | `common` — interceptor, config, decorator condivisi | 5 | ⬜ da iniziare | — |

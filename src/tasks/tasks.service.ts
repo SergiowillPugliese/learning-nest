@@ -39,31 +39,46 @@ export class TasksService {
       updatedAt: new Date(),
     },
   ];
+  private nextId = 5;
 
-  create(createTaskDto: CreateTaskDto) {
-    return createTaskDto;
+  create(createTaskDto: CreateTaskDto): Task {
+    const newTask = {
+      ...createTaskDto,
+      id: this.nextId++,
+      completed: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.tasks = [...this.tasks, newTask];
+    return newTask;
   }
 
-  findAll() {
-    return this.tasks;
+  findAll(): Task[] {
+    return [...this.tasks] as Task[];
   }
 
-  findOne(id: number) {
-    return this.tasks.find((task) => task.id === id);
-  }
-
-  update(id: number, updateTaskDto: UpdateTaskDto) {
-    return this.tasks.map((task) =>
-      task.id === id ? { ...task, ...updateTaskDto } : task,
-    );
-  }
-
-  remove(id: number) {
-    const index = this.tasks.findIndex((task) => task.id === id);
-    if (index === -1) {
-      throw new NotFoundException('Task not found');
+  findOne(id: number): Task {
+    const task = this.tasks.find((task) => task.id === id);
+    if (!task) {
+      throw new NotFoundException(`Task ${id} not found`);
     }
-    this.tasks.splice(index, 1);
-    return this.tasks;
+    return task;
+  }
+
+  update(id: number, updateTaskDto: UpdateTaskDto): Task {
+    const existing = this.findOne(id);
+    const updated: Task = {
+      ...existing,
+      ...updateTaskDto,
+      updatedAt: new Date(),
+    };
+    this.tasks = this.tasks.map((task) => (task.id === id ? updated : task));
+    return updated;
+  }
+
+  remove(id: number): Task {
+    const removed = this.findOne(id);
+    this.tasks = this.tasks.filter((task) => task.id !== id);
+    return removed;
   }
 }

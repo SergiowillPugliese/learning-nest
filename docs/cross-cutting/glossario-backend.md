@@ -8,6 +8,8 @@
 
 **REST (REpresentational State Transfer)** — convenzione per disegnare API: le risorse sono sostantivi negli URL (`/tasks`), le azioni sono i metodi HTTP (GET legge, POST crea, PATCH aggiorna, DELETE elimina).
 
+**Pipe (Nest)** — classe che intercetta l'INPUT di un handler prima che il metodo venga eseguito, per trasformarlo (`ParseIntPipe`: stringa → numero) o validarlo (`ValidationPipe`). **Falso amico** con Angular: lì le pipe formattano l'output nei template (`{{ date | date }}`), qui lavorano sull'input in ingresso.
+
 **Payload** — i dati trasportati da una richiesta o risposta HTTP; tipicamente il body JSON. Quando in Angular fai `http.post('/tasks', dati)`, `dati` è il payload.
 
 **DTO (Data Transfer Object)** — una classe che descrive la forma dei dati che entrano o escono da un endpoint. Serve a validare e a non esporre mai la struttura interna del DB. *(approfondito al Giorno 2)*
