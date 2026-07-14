@@ -1,7 +1,7 @@
 # Plan — Giorno 3: Prisma + SQLite per il modulo tasks
 
 **Data:** 2026-07-13
-**Status:** in corso
+**Status:** completed (2026-07-14) — vedi [tasks.md](../tasks.md). Imprevisti risolti degni di nota: generator Prisma 7 in ESM su progetto CJS (fix: `moduleFormat = "cjs"`); client fuori da `src/` rompeva la build (fix: output in `src/generated`); Prisma 7 richiede driver adapter esplicito a runtime (`@prisma/adapter-better-sqlite3` + dotenv in main.ts)
 **Riferimento:** Giorno 3 del [piano di studio](../../../cross-cutting/2026-07-07-piano-studio-nestjs.md) · [ADR 001](../../../adr/001-prisma-come-orm.md)
 
 ## Obiettivo

@@ -1,7 +1,7 @@
-# Feature: tasks (stato Giorno 2 — CRUD validato, in memoria)
+# Feature: tasks (stato Giorno 3 — CRUD validato su SQLite via Prisma)
 
-**Ultimo aggiornamento:** 2026-07-13
-**Stato:** CRUD in memoria con validazione completa dell'input. Prossime evoluzioni: Prisma (Giorno 3), ownership utente (Giorno 4).
+**Ultimo aggiornamento:** 2026-07-14
+**Stato:** CRUD completo, input validato, persistenza reale su SQLite via Prisma. Prossima evoluzione: auth e ownership utente (post-colloquio; per il colloquio si racconta la teoria).
 
 ## Panoramica
 
@@ -41,10 +41,39 @@ Modulo `tasks`: CRUD completo su risorsa Task, storage in array in memoria dentr
 - **`ParseIntPipe`** su ogni `@Param('id')`: il param arriva già `number`; `GET /tasks/abc` → 400 onesto invece del 404 fuorviante del vecchio `+id`
 - Scoperta chiave (verificata con esperimento): senza pipe, i tipi TS non filtrano nulla a runtime — un body con campi inventati veniva salvato nel task. E la whitelist considera "ammessi" solo i campi CON almeno un decoratore di validazione: DTO nudo = tutto respinto.
 
-## Limiti noti (voluti, si risolvono nei giorni successivi)
+## Persistenza con Prisma (Giorno 3)
 
-- Dati persi a ogni riavvio: storage in memoria (→ Giorno 3, Prisma)
-- Niente utenti/permessi (→ Giorno 4)
+- **Schema** in `prisma/schema.prisma`: modello `Task` con `@id @default(autoincrement())` (pensiona il contatore manuale), `description String?` (nullable), `completed @default(false)`, `createdAt @default(now())`, `updatedAt @updatedAt` — **i default e i timestamp sono responsabilità del DB/client, non del service**
+- **Migration** versionata in `prisma/migrations/` (SQL leggibile); DB = file `dev.db` in root (gitignorato; le migration invece SI committano)
+- **Prisma 7**: config CLI in `prisma.config.ts`; client TS generato in `src/generated/prisma` con `moduleFormat = "cjs"` (il progetto Nest compila CommonJS); a runtime serve il **driver adapter** esplicito (`@prisma/adapter-better-sqlite3`) — il motore Rust non esiste più
+- **`PrismaService`** (`src/prisma/`): estende `PrismaClient`, costruttore con fail-fast su `DATABASE_URL` mancante + `super({ adapter })`, `onModuleInit` async che `await this.$connect()` (Nest ATTENDE gli hook: se il DB non c'è, l'app non parte). `.env` caricato da `import 'dotenv/config'` in cima a `main.ts`
+- **`PrismaModule`** con `exports: [PrismaService]`, importato da `TasksModule` — un provider registrato UNA volta = una sola connessione
+- **`TasksService`**: metodi async che delegano a `this.prismaService.task.*`; il 404 resta logica nostra (`findUnique` → `null` → `NotFoundException`, con findOne-gatekeeper riusato da update/remove); tipo `Task` importato dal client generato (l'entity class è stata eliminata: la fonte di verità è lo schema)
+- **Il controller non è cambiato di una riga** nel passaggio memoria→DB: Nest attende da solo le Promise ritornate dagli handler
+
+## Domande da colloquio (Giorno 3) — con le risposte
+
+**1. Cos'è un ORM e perché usarlo?**
+Un layer che traduce oggetti/metodi tipizzati in SQL (`prisma.task.findMany()` → `SELECT`). Vantaggi: produttività, type-safety (il client Prisma è GENERATO dallo schema: rinomino un campo e il compilatore trova ogni punto da aggiornare), portabilità tra DB. Costo: query molto complesse a volte si scrivono meglio in SQL (Prisma ha `$queryRaw` come uscita di sicurezza).
+
+**2. Cos'è una migration?**
+Un file SQL versionato che descrive UNA modifica allo schema. È il commit git del database: storia ordinata, replicabile su ogni ambiente. Le modifiche allo schema non si fanno mai a mano sul DB.
+
+**3. Come integri Prisma in NestJS?**
+Un `PrismaService` che estende `PrismaClient` e si connette in `onModuleInit`, registrato in un modulo dedicato che lo esporta; i moduli feature lo importano. Un solo provider = una sola connessione condivisa.
+
+**4. Perché la connessione in `onModuleInit` e non nel costruttore?**
+Il costruttore non può essere async; l'hook sì, e Nest **attende** le Promise degli hook durante il bootstrap → fail fast: se il DB è irraggiungibile l'app non si mette in ascolto. (Differenza da Angular: `ngOnInit` async non viene atteso da nessuno.)
+
+**5. Il DB restituisce null per un id inesistente: chi decide che è un 404?**
+Il service: il DB/ORM non conosce l'HTTP. `findUnique` → `null` → il service lancia `NotFoundException` → l'exception layer di Nest la traduce in 404. Ogni layer parla la sua lingua.
+
+**6. Cosa cambieresti per passare a Postgres?**
+Provider nello schema, DATABASE_URL, driver adapter, e rilancio le migration. Il codice del service non cambia: è il punto dell'ORM.
+
+## Limiti noti (voluti)
+
+- Niente utenti/permessi (→ post-colloquio: auth JWT + ownership)
 
 ## Domande da colloquio (Giorno 1) — con le risposte
 

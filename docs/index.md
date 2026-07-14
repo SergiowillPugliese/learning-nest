@@ -10,6 +10,7 @@
 |-----|-------------|-------|
 | [Piano di studio NestJS](cross-cutting/2026-07-07-piano-studio-nestjs.md) | Roadmap 6 giorni: fondamentali → REST/validazione → Prisma → Auth JWT → lifecycle/testing → simulazione colloquio | 🔄 in corso — Giorno 1 non iniziato |
 | [Glossario backend](cross-cutting/glossario-backend.md) | Termini backend spiegati man mano, con paralleli Angular | 🔄 vivo, si aggiorna sempre |
+| [Talking points colloquio](cross-cutting/2026-07-16-talking-points-colloquio.md) | Ionic (pronto) + storie Angular e racconto TaskFlow (da completare gio 16) | 🔄 in corso |
 
 ## ADR (decisioni architetturali)
 
@@ -21,7 +22,7 @@
 
 | Feature | Giorni | Stato | Plan |
 |---------|--------|-------|------|
-| [`tasks`](features/tasks/tasks.md) — CRUD task (prima in memoria, poi Prisma) | 1–3 | 🔄 Giorno 3 in corso (Prisma) | [2026-07-07 CRUD in memoria](features/tasks/plans/2026-07-07-giorno-1-crud-in-memoria.md) ✅ · [2026-07-13 validazione DTO](features/tasks/plans/2026-07-13-giorno-2-validazione-dto.md) ✅ · [2026-07-13 Prisma](features/tasks/plans/2026-07-13-giorno-3-prisma.md) 🔄 |
+| [`tasks`](features/tasks/tasks.md) — CRUD task su SQLite via Prisma | 1–3 | ✅ Giorni 1-3 completati (CRUD validato e persistente) | [2026-07-07 CRUD in memoria](features/tasks/plans/2026-07-07-giorno-1-crud-in-memoria.md) ✅ · [2026-07-13 validazione DTO](features/tasks/plans/2026-07-13-giorno-2-validazione-dto.md) ✅ · [2026-07-13 Prisma](features/tasks/plans/2026-07-13-giorno-3-prisma.md) ✅ |
 | `users` — anagrafica utenti | 4 | ⬜ da iniziare | — |
 | `auth` — register/login JWT, guard | 4 | ⬜ da iniziare | — |
 | `common` — interceptor, config, decorator condivisi | 5 | ⬜ da iniziare | — |

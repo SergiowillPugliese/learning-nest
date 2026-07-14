@@ -97,11 +97,23 @@ Un task manager con utenti e autenticazione copre TUTTI i temi scelti (fondament
 - Se un giorno reale copre meno di un "giorno" del piano, va bene: meglio solidi che completi. In caso di tempo stretto, il giorno 5 è comprimibile (solo request lifecycle + un unit test), il giorno 6 no.
 - Ogni giornata completata → feature doc in `docs/features/<feature>/` con la sezione "Domande da colloquio"
 
+## ⚡ Ripianificazione d'emergenza (2026-07-14)
+
+Colloquio CONFERMATO: **Lilitech, Torino, giovedì 16/07 ore 17:00**, test tecnico pratico sulle loro tecnologie (Angular/Nest/DB; Ionic gradito). Vincoli reali (aggiornati 14/07 h15): mar 4h di lavoro residue → sera libera; mer 8h lavoro → solo sera; gio lavoro 9-16 e partenza alle 16 → ZERO studio giovedì. Budget totale: ~4-5 ore.
+
+| Quando | Cosa | Note di taglio |
+|---|---|---|
+| Mar 14 sera (~2-3h) | Chiudere Giorno 3: refactor Prisma + test persistenza + commit/push GitHub. Se resta energia: dettare in chat le 2-3 storie Angular per il doc talking points | Niente altro |
+| Mer 15 sera (~2h) | SOLO TEORIA da colloquio: (1) auth JWT raccontata (flusso register/login/guard, bcrypt, dove vive il secret), (2) request lifecycle completo, (3) mini-simulazione rapid-fire 30 min sulle domande dei feature doc | **Tagliata l'implementazione dell'auth**: si racconta, non si scrive. Testing: solo 2 frasi di teoria |
+| Gio 16 | Nessun blocco di studio. Cheat-sheet di una pagina (preparata da Claude mer sera) da leggere in pausa pranzo e prima di entrare; ripasso mentale in viaggio | Eventuali 3-4 flash question in chat in pausa pranzo se Sergio vuole |
+
+Tagli dichiarati e assunti: auth implementata → solo teoria; ownership → solo racconto; testing → solo concetti; ConfigModule → una frase; Giorni 5-6 del piano originale → compressi nella serata del 15. Il request lifecycle NON si taglia: è LA domanda Nest. Dopo il colloquio il piano originale riprende da dove si era fermato (l'auth va comunque implementata: il progetto resta il percorso di studio).
+
 ## Stato avanzamento
 
 - [x] Giorno 1 — Fondamentali + CRUD in memoria ✅ (completato 2026-07-08; manca solo l'esperimento "campi extra nel body", fatto da ponte verso il Giorno 2)
 - [x] Giorno 2 — DTO, validazione, errori ✅ (completato 2026-07-13)
-- [ ] Giorno 3 — Prisma + SQLite
+- [x] Giorno 3 — Prisma + SQLite ✅ (completato 2026-07-14)
 - [ ] Giorno 4 — Auth JWT + guard
 - [ ] Giorno 5 — Request lifecycle + testing
 - [ ] Giorno 6 — Ripasso e simulazione
