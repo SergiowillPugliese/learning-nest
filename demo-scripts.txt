@@ -1,0 +1,117 @@
+=============================================================
+ TASKFLOW — SCRIPT DEMO API (console browser su http://localhost:3000)
+ Ordine consigliato. Ogni blocco si incolla da solo nella console (F12).
+ NON ricaricare la pagina tra il login e i test col token!
+=============================================================
+
+--- 0) SERVER SU: npm run start:dev — poi apri http://localhost:3000 ---
+
+
+=== AUTH ====================================================
+
+--- 1) REGISTER (atteso: 201, utente SENZA password) ---
+
+fetch('http://localhost:3000/auth/register', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ email: 'demo@test.it', password: 'password123' })
+}).then(r => { console.log('status:', r.status); return r.json(); }).then(console.log);
+
+--- 2) REGISTER DUPLICATO (atteso: 409 Conflict) ---
+(riesegui identico lo script 1)
+
+--- 3) REGISTER INVALIDO (atteso: 400, validazione: email non valida + password corta) ---
+
+fetch('http://localhost:3000/auth/register', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ email: 'non-una-email', password: 'corta' })
+}).then(r => { console.log('status:', r.status); return r.json(); }).then(console.log);
+
+--- 4) LOGIN OK (atteso: 200 + token; lo salva in window.token) ---
+
+fetch('http://localhost:3000/auth/login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ email: 'demo@test.it', password: 'password123' })
+}).then(r => { console.log('status:', r.status); return r.json(); })
+  .then(data => { window.token = data.access_token; console.log('TOKEN SALVATO:', data.access_token); });
+
+--- 5) LOGIN PASSWORD ERRATA (atteso: 401 "Invalid credentials") ---
+
+fetch('http://localhost:3000/auth/login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ email: 'demo@test.it', password: 'SBAGLIATA' })
+}).then(r => { console.log('status:', r.status); return r.json(); }).then(console.log);
+
+--- 6) LOGIN EMAIL INESISTENTE (atteso: 401 con STESSA risposta del 5 — anti user-enumeration) ---
+
+fetch('http://localhost:3000/auth/login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ email: 'fantasma@test.it', password: 'password123' })
+}).then(r => { console.log('status:', r.status); return r.json(); }).then(console.log);
+
+
+=== GUARD ===================================================
+
+--- 7) TASKS SENZA TOKEN (atteso: 401) ---
+
+fetch('http://localhost:3000/tasks')
+  .then(r => { console.log('senza token:', r.status); return r.json(); }).then(console.log);
+
+--- 8) TASKS CON TOKEN MANOMESSO (atteso: 401 "Invalid token") ---
+
+fetch('http://localhost:3000/tasks', {
+  headers: { 'Authorization': 'Bearer ' + window.token.slice(0, -1) + 'X' }
+}).then(r => { console.log('manomesso:', r.status); return r.json(); }).then(console.log);
+
+
+=== CRUD TASKS (tutti col token) ============================
+
+--- 9) CREA UN TASK (atteso: 201) ---
+
+fetch('http://localhost:3000/tasks', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + window.token },
+  body: JSON.stringify({ title: 'Task di demo', description: 'creato in colloquio' })
+}).then(r => { console.log('status:', r.status); return r.json(); }).then(console.log);
+
+--- 10) LISTA TASK (atteso: 200 + array) ---
+
+fetch('http://localhost:3000/tasks', {
+  headers: { 'Authorization': 'Bearer ' + window.token }
+}).then(r => { console.log('status:', r.status); return r.json(); }).then(console.log);
+
+--- 11) COMPLETA IL TASK 1 (atteso: 200, completed: true, updatedAt aggiornato) ---
+
+fetch('http://localhost:3000/tasks/1', {
+  method: 'PATCH',
+  headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + window.token },
+  body: JSON.stringify({ completed: true })
+}).then(r => { console.log('status:', r.status); return r.json(); }).then(console.log);
+
+--- 12) PATCH CON CAMPO NON PREVISTO (atteso: 400, whitelist) ---
+
+fetch('http://localhost:3000/tasks/1', {
+  method: 'PATCH',
+  headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + window.token },
+  body: JSON.stringify({ campoInventato: 'ciao' })
+}).then(r => { console.log('status:', r.status); return r.json(); }).then(console.log);
+
+--- 13) ID NON NUMERICO (atteso: 400, ParseIntPipe) ---
+
+fetch('http://localhost:3000/tasks/abc', {
+  headers: { 'Authorization': 'Bearer ' + window.token }
+}).then(r => { console.log('status:', r.status); return r.json(); }).then(console.log);
+
+--- 14) DELETE ID INESISTENTE (atteso: 404) ---
+
+fetch('http://localhost:3000/tasks/999', {
+  method: 'DELETE',
+  headers: { 'Authorization': 'Bearer ' + window.token }
+}).then(r => { console.log('status:', r.status); return r.json(); }).then(console.log);
+
+--- 15) PERSISTENZA: ferma il server (Ctrl+C), riavvia, rifai lo script 10 ---
+    (atteso: i task sono ancora tutti lì — SQLite, non memoria)

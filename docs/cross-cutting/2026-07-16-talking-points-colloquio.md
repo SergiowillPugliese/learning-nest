@@ -6,6 +6,38 @@ Regola d'ingaggio unica: mai bluffare. Formula per ciò che non sai: "non lo so"
 
 ---
 
+## Job description (LinkedIn, trovata il 15/07) — i fatti chiave
+
+- **Azienda madre: 30+ anni di chiptuning** (strumenti e software di rimappatura centraline motore/cambio, Torino). **Lilitech = la NUOVA business unit Domotica** → assumono per COSTRUIRE, non per mantenere: perfetto per un profilo in crescita.
+- **Il prodotto da costruire:** una **PWA** (Angular) + web services cloud (NestJS) + **database distribuito NON relazionale (MongoDB, Cassandra)** + **messaggistica/notifiche realtime**.
+- MUST: 2 anni su Nest+Angular (wishlist — l'HR conosce il CV e ha chiamato lo stesso), JS/TS, MongoDB/Cassandra, gestione IT (domini, SSL, VPS, AWS).
+- NICE: Ionic, Kafka, app native.
+- RAL 35-40k, indeterminato metalmeccanico, 1 giorno/settimana smart.
+
+**Temi da colloquio quasi certi in più rispetto al previsto:** NoSQL vs SQL (MongoDB!), realtime (WebSocket/notifiche), PWA. Coperti nel blocco teoria JD del 15/07 e in cheat-sheet.
+
+**Ponti pronti per i gap:**
+- DB: "Ho usato Prisma su SQLite — Prisma astrae il provider e supporta anche MongoDB; i concetti (schema, migration, client tipizzato) si trasferiscono. La differenza documenti-vs-tabelle la conosco a livello concettuale."
+- Realtime: "Da frontend il realtime l'ho consumato; lato Nest so che esistono i gateway WebSocket come cittadini di prima classe del framework."
+- IT ops (domini/SSL/VPS/AWS): gap onesto → "non l'ho gestito in prima persona, so cosa sono e mi interessa impararlo" — NON improvvisare.
+
+## Contesto azienda (ricerca del 15/07)
+
+**Lilitech = business unit domotica / building automation, Torino.** Progettano e realizzano impianti domotici cablati (case, uffici, hotel, PA): controllo luci, clima, sicurezza, accessi. Sono **KNX Member & Partner** (KNX = lo standard internazionale bus per l'automazione degli edifici). Ecosistema: hardware proprietario + software di supervisione + **app di controllo** per installatori e clienti finali + rete di installatori certificati con corsi di formazione.
+
+**Perché lo stack richiesto ora ha senso:** Angular = software di supervisione/configurazione web · NestJS = backend che parla con gli impianti · database = anagrafica impianti/dispositivi/utenti · **Ionic = quasi certamente la loro app di controllo mobile** (ecco perché è "gradito").
+
+**Come usarlo giovedì:**
+- Aggancia TaskFlow al loro dominio: "un backend Nest che espone risorse via REST — nel vostro caso immagino dispositivi e impianti invece di task"
+- Cita KNX con leggerezza: "ho visto che siete partner KNX — lo standard bus per l'automazione degli edifici" (dimostra che ti sei informato; NON fingere di conoscerlo tecnicamente)
+- **Domande intelligenti da fare a LORO** (fare belle domande = segnale forte):
+  1. "L'app di controllo è fatta con Ionic? Condividete codice con il pannello web Angular?"
+  2. "Come gestite gli aggiornamenti in tempo reale dello stato dei dispositivi verso l'app — polling o qualcosa di push tipo WebSocket?"
+  3. "Il backend parla direttamente col bus KNX o c'è un gateway in mezzo?"
+  4. "Com'è organizzato il team di sviluppo? Chi seguirebbe il mio onboarding sul backend?"
+
+---
+
 ## Ionic — 5 minuti credibili (base: esperimento personale con Capacitor)
 
 **Apertura onesta:** "L'ho esplorato con un progetto personale usando Capacitor — esperienza da laboratorio, non da produzione. Ma i tre concetti che lo distinguono da Angular puro li ho toccati con mano, e il resto È Angular."

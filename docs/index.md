@@ -23,8 +23,7 @@
 | Feature | Giorni | Stato | Plan |
 |---------|--------|-------|------|
 | [`tasks`](features/tasks/tasks.md) — CRUD task su SQLite via Prisma | 1–3 | ✅ Giorni 1-3 completati (CRUD validato e persistente) | [2026-07-07 CRUD in memoria](features/tasks/plans/2026-07-07-giorno-1-crud-in-memoria.md) ✅ · [2026-07-13 validazione DTO](features/tasks/plans/2026-07-13-giorno-2-validazione-dto.md) ✅ · [2026-07-13 Prisma](features/tasks/plans/2026-07-13-giorno-3-prisma.md) ✅ |
-| `users` — anagrafica utenti | 4 | ⬜ da iniziare | — |
-| `auth` — register/login JWT, guard | 4 | ⬜ da iniziare | — |
+| [`auth`](features/auth/auth.md) — register/login JWT, guard (assorbe anche users) | 4 | ✅ completata 15/07 (ownership solo raccontata) | [2026-07-15 auth JWT](features/auth/plans/2026-07-15-giorno-4-auth-jwt.md) ✅ |
 | `common` — interceptor, config, decorator condivisi | 5 | ⬜ da iniziare | — |
 
 > Quando una feature parte: creare `docs/features/<feature>/plans/YYYY-MM-DD-nome.md` PRIMA del codice, e `docs/features/<feature>/<feature>.md` (con sezione "Domande da colloquio") a fine implementazione.

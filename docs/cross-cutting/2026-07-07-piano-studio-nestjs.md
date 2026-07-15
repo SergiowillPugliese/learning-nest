@@ -114,6 +114,6 @@ Tagli dichiarati e assunti: auth implementata → solo teoria; ownership → sol
 - [x] Giorno 1 — Fondamentali + CRUD in memoria ✅ (completato 2026-07-08; manca solo l'esperimento "campi extra nel body", fatto da ponte verso il Giorno 2)
 - [x] Giorno 2 — DTO, validazione, errori ✅ (completato 2026-07-13)
 - [x] Giorno 3 — Prisma + SQLite ✅ (completato 2026-07-14)
-- [ ] Giorno 4 — Auth JWT + guard
+- [x] Giorno 4 — Auth JWT + guard ✅ (completato 2026-07-15; ownership raccontata, non implementata)
 - [ ] Giorno 5 — Request lifecycle + testing
 - [ ] Giorno 6 — Ripasso e simulazione

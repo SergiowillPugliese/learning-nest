@@ -28,4 +28,10 @@
 
 **Repository (pattern)** — strato che incapsula l'accesso ai dati dietro un'interfaccia (findAll, findById, create...). TypeORM lo usa esplicitamente; con Prisma il ruolo lo svolge il service che usa PrismaService.
 
+**Hash (di password)** — trasformazione a senso unico: dalla password ottieni l'hash, dall'hash NON puoi tornare alla password (a differenza della cifratura, che è reversibile). Al login non si "decifra" nulla: si ri-hasha ciò che l'utente ha digitato e si confrontano gli hash.
+
+**Salt** — stringa casuale unica aggiunta a ogni password prima dell'hash: due utenti con la stessa password hanno hash diversi, e le tabelle precalcolate (rainbow table) diventano inutili. bcrypt lo gestisce da solo, incorporandolo nell'hash.
+
+**bcrypt** — algoritmo di hashing per password, **lento per scelta** (fattore di costo configurabile): rallentare di qualche millisecondo il login legittimo rende i tentativi di forza bruta economicamente impraticabili.
+
 **JWT (JSON Web Token)** — token firmato che il server rilascia al login e il client rimanda a ogni richiesta per dimostrare chi è. Lato Angular lo hai già incontrato negli interceptor che aggiungono l'header `Authorization`. *(approfondito al Giorno 4)*
