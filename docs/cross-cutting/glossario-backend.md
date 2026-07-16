@@ -34,4 +34,6 @@
 
 **bcrypt** — algoritmo di hashing per password, **lento per scelta** (fattore di costo configurabile): rallentare di qualche millisecondo il login legittimo rende i tentativi di forza bruta economicamente impraticabili.
 
+**Interceptor (Nest)** — componente che AVVOLGE l'esecuzione dell'handler: codice prima E dopo, come una cipolla. Usa RxJS (l'handler diventa un Observable). Usi tipici: log dei tempi, trasformare la risposta in un formato standard, cache. Parente concettuale dell'HttpInterceptor di Angular — ma lato server avvolge l'esecuzione, non la chiamata in uscita.
+
 **JWT (JSON Web Token)** — token firmato che il server rilascia al login e il client rimanda a ogni richiesta per dimostrare chi è. Lato Angular lo hai già incontrato negli interceptor che aggiungono l'header `Authorization`. *(approfondito al Giorno 4)*
